@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/register_username_edit"
+        android:id="@+id/username_login_edit"
         android:layout_width="150dp"
         android:layout_height="50dp"
         app:layout_constraintHorizontal_bias="0.504"
@@ -38,10 +38,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/register_username_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/username_login_edit" />
 
     <EditText
-        android:id="@+id/password_register_edit"
+        android:id="@+id/password_login_edit"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginBottom="207dp"
@@ -53,13 +53,23 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/sign_up_button"
+        android:id="@+id/login_button"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="8dp"
+        android:text="Login"
+        app:layout_constraintTop_toBottomOf="@+id/password_login_edit" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="168dp"
+        android:layout_height="39dp"
         android:text="Register"
-        app:layout_constraintTop_toBottomOf="@+id/password_register_edit" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
 </android.support.constraint.ConstraintLayout>
