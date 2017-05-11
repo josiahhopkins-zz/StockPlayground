@@ -52,7 +52,15 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
         task.execute(url.toString());
         // Takes you back to the previous fragment by popping the current fragment out.
         getSupportFragmentManager().popBackStackImmediate();
-        Intent i = new Intent();
+        Intent i = new Intent(this, StockActivity.class);
+        Log.e("Username", getUsernameFromUrl(url));
+        i.putExtra("Username", getUsernameFromUrl(url));
+        startActivity(i);
+    }
+
+    private String getUsernameFromUrl(String url){
+        String lastHalf = url.substring(url.indexOf("username=") + 8);
+        return lastHalf.substring(0, lastHalf.indexOf("&password"));
     }
 
 
