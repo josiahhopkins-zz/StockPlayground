@@ -25,6 +25,10 @@
         <activity
             android:name=".StockActivity"
             android:label="@string/title_activity_stock"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".toDelete"
+            android:label="@string/title_activity_to_delete"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.josiah.stockplayground.GroupListFragment.OnGroupListFragmentInteractionListener;
 import com.example.josiah.stockplayground.group.Group;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecyclerViewAdapter.ViewHolder> {
@@ -36,8 +34,8 @@ public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getName());
+        holder.mContentView.setText(Integer.toString(mValues.get(position).getPortfolio_value()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

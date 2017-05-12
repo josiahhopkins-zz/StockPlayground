@@ -3,6 +3,7 @@ package com.example.josiah.stockplayground;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +18,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static java.lang.Thread.sleep;
+
 public class MainActivity extends AppCompatActivity  implements RegisterFragment.UserAddListener, LoginFragment.loginListener, LoginFragment.registerListener{
 
-
+    private boolean isLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
         */
         ) {
             LoginFragment courseFragment = new LoginFragment();
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.login_page_container, courseFragment)
                     .commit();
@@ -44,22 +47,25 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
         task.execute(url.toString());
         // Takes you back to the previous fragment by popping the current fragment out.
         getSupportFragmentManager().popBackStackImmediate();
+        isLoggedIn = false;
     }
 
     @Override
     public void login(String url) {
         AddUserTask task = new AddUserTask();
         task.execute(url.toString());
-        // Takes you back to the previous fragment by popping the current fragment out.
-        getSupportFragmentManager().popBackStackImmediate();
-        Intent i = new Intent(this, StockActivity.class);
+        // Takes you back to the previous fragment by popping the current fragment out.\
         Log.e("Username", getUsernameFromUrl(url));
-        i.putExtra("Username", getUsernameFromUrl(url));
-        startActivity(i);
+        if(isLoggedIn) {
+            getSupportFragmentManager().popBackStackImmediate();
+            Intent i = new Intent(this, StockActivity.class);
+            i.putExtra("Username", getUsernameFromUrl(url));
+            startActivity(i);
+        }
     }
 
     private String getUsernameFromUrl(String url){
-        String lastHalf = url.substring(url.indexOf("username=") + 8);
+        String lastHalf = url.substring(url.indexOf("username=") + 9);
         return lastHalf.substring(0, lastHalf.indexOf("&password"));
     }
 
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
     @Override
     public void goToRegister() {
             Toast.makeText(this, "Register Clicked", Toast.LENGTH_SHORT).show();
-            getFragmentManager().beginTransaction().replace(R.id.login_page_container, new RegisterFragment()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.login_page_container, new RegisterFragment()).addToBackStack(null).commit();
     }
 
 
@@ -134,6 +140,7 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
                 String status = (String) jsonObject.get("result");
                 if (status.equals("success")) {
                     Toast.makeText(getApplicationContext(), "Success!!", Toast.LENGTH_LONG).show();
+                    isLoggedIn = true;
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to add: " + jsonObject.get("error"), Toast.LENGTH_LONG).show();
                 }
@@ -141,5 +148,11 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
                 Toast.makeText(getApplicationContext(), "Something wrong with the data" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        isLoggedIn = false;
     }
 }
