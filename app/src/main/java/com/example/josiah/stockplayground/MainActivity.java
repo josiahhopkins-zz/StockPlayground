@@ -20,6 +20,10 @@ import java.net.URL;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * This class holds the starting actions. Namely the registering and logging in fragments.
+ * @author Josiah
+ */
 public class MainActivity extends AppCompatActivity  implements RegisterFragment.UserAddListener, LoginFragment.loginListener, LoginFragment.registerListener{
 
     private boolean isLoggedIn;
@@ -41,6 +45,10 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
 
     }
 
+    /**
+     * Adds a user to the database
+     * @param url: the url with which a user can be added into the database.
+     */
     @Override
     public void addUser(String url) {
         AddUserTask task = new AddUserTask();
@@ -50,6 +58,10 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
         isLoggedIn = false;
     }
 
+    /**
+     * Logs in a user
+     * @param url: the url with which to verify a user.
+     */
     @Override
     public void login(String url) {
         AddUserTask task = new AddUserTask();
@@ -64,19 +76,29 @@ public class MainActivity extends AppCompatActivity  implements RegisterFragment
         }
     }
 
+    /**
+     * Grabs the username from the given login url
+     * @param url: a login url
+     * @return: the username
+     */
     private String getUsernameFromUrl(String url){
         String lastHalf = url.substring(url.indexOf("username=") + 9);
         return lastHalf.substring(0, lastHalf.indexOf("&password"));
     }
 
 
+    /**
+     * Goes to the registration fragment.
+     */
     @Override
     public void goToRegister() {
             Toast.makeText(this, "Register Clicked", Toast.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction().replace(R.id.login_page_container, new RegisterFragment()).addToBackStack(null).commit();
     }
 
-
+    /**
+     * This class asyncronously adds users to the database.
+     */
     private class AddUserTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {

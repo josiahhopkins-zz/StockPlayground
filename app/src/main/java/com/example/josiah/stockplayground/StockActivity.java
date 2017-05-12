@@ -28,6 +28,10 @@ import java.net.URLEncoder;
 
 import layout.OptionDisplayFragment;
 
+/**
+ * This is the holder for all of the non login related actions.
+ * @author Josiah
+ */
 public class StockActivity extends AppCompatActivity implements AddGroupFragment.GroupAddListener, GroupListFragment.OnListFragmentInteractionListener, OptionDisplayFragment.OnFragmentInteractionListener{
 
     public static final String GROUP_ADD_URL = "http://cssgate.insttech.washington.edu/~josiah3/PHP_Code/PHP%20Code/addGroup.php?";
@@ -52,6 +56,9 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
 
     }
 
+    /**
+     * Goes to the group fragment.
+     */
     public void goToGroups(){
         GroupListFragment groupListFragment = new GroupListFragment();
         getSupportFragmentManager()
@@ -62,6 +69,9 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
 
     }
 
+    /**
+     * Goes to the options fragment.
+     */
     public void goToOptions(){
         OptionDisplayFragment groupListFragment = new OptionDisplayFragment();
         getSupportFragmentManager()
@@ -72,6 +82,9 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
     }
 
 
+    /**
+     * Goes to the add group fragment
+     */
     public void goToAddGroup(){
         AddGroupFragment groupListFragment = new AddGroupFragment();
         getSupportFragmentManager()
@@ -82,6 +95,10 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
     }
 
 
+    /**
+     * Adds a new group where the currently logged in user is the owner.
+     * @param url: the url with which a group can be created.
+     */
     @Override
     public void addGroup(String url) {
         StockActivity.AddUserTask task = new AddUserTask();
@@ -90,7 +107,9 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
         getSupportFragmentManager().popBackStackImmediate();
     }
 
-
+    /**
+     * The class which asynchronously adds a user.
+     */
     private class AddUserTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {

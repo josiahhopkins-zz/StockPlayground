@@ -16,22 +16,17 @@ import java.net.URLEncoder;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddGroupFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddGroupFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A fragment which allows the adding of a new group
+ * @author Josiah
  */
 public class AddGroupFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     private GroupAddListener mListener;
 
@@ -51,7 +46,6 @@ public class AddGroupFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment AddGroupFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AddGroupFragment newInstance(String param1, String param2) {
         AddGroupFragment fragment = new AddGroupFragment();
         Bundle args = new Bundle();
@@ -102,7 +96,11 @@ public class AddGroupFragment extends Fragment {
     }
 
 
-
+    /**
+     *
+     * @param v: view which originally triggers this event
+     * @return a String which will create a URL which adds a new group to the database.
+     */
     private String buildGroupURL(View v){
         StringBuilder sb = new StringBuilder(StockActivity.GROUP_ADD_URL);
         try {
@@ -134,7 +132,6 @@ public class AddGroupFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

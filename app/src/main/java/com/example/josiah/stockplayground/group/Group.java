@@ -9,12 +9,19 @@ import java.util.List;
 
 /**
  * Created by Josiah on 5/11/2017.
+ * This class holds the information about a group. It only holds who the owner is. It's name. And it's portfolio value.
  */
 
 public class Group implements Serializable {
     public static final String NAME = "group_name", PORTFOLIO_VALUE = "portfolio_value", OWNER = "Owner";
     private String name;
 
+    /**
+     *
+     * @param name: Name of the group
+     * @param owner: username of the owner of this group
+     * @param portfolio_value value of the portfolio. Should be greater than 0
+     */
     public Group(String name, String owner, int portfolio_value) {
         this.name = name;
         this.owner = owner;
@@ -50,7 +57,9 @@ public class Group implements Serializable {
     private int portfolio_value;
 
     /**
-     * Parses the json string, returns an error message if unsuccessful.  * Returns Group list if success.  * @param GroupJSON  * @return reason or null if successful.
+     * Parses the json string, returns an error message if unsuccessful.
+     * Returns Group list if success.
+     * @param GroupJSON  * @return reason or null if successful.
      */
     public static String parseGroupJSON(String GroupJSON, List<Group> GroupList) {
         String reason = null;

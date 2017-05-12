@@ -16,20 +16,14 @@ import java.net.URLEncoder;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RegisterFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This class holds a fragment which can be used to register a new user.
+ * @author Josiah
  */
 public class RegisterFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private EditText mUsernameEditText;
@@ -37,8 +31,6 @@ public class RegisterFragment extends Fragment {
 
     private final String USER_ADD_URL = "http://cssgate.insttech.washington.edu/~josiah3/PHP_Code/PHP%20Code/adduser.php?";
 
-    private View mProgressView;
-    private View mLoginFormView;
 
     private UserAddListener mListener;
 
@@ -59,7 +51,6 @@ public class RegisterFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RegisterFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
@@ -76,23 +67,6 @@ public class RegisterFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-
-    private String buildCourseURL(View v) {
-        StringBuilder sb = new StringBuilder(USER_ADD_URL);
-        try {
-            String username = mUsernameEditText.getText().toString();
-            sb.append("username=");
-            sb.append(username);
-            String password = mPasswordEditText.getText().toString();
-            sb.append("&password=");
-            sb.append(URLEncoder.encode(password, "UTF-8"));
-            Log.i("CourseAddFragment", sb.toString());
-        } catch (Exception e) {
-            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        return sb.toString();
     }
 
     @Override
@@ -112,13 +86,6 @@ public class RegisterFragment extends Fragment {
         mPasswordEditText = (EditText) view.findViewById(R.id.password_register_edit);
         return view;
     }
-//
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
 
     @Override
     public void onAttach(Context context) {
@@ -148,10 +115,14 @@ public class RegisterFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * builds a url to add a user
+     * @param v: the view originally clicked
+     * @return: a url with which a new user can be added.
+     */
     private String buildAddUserURL(View v) {
         StringBuilder sb = new StringBuilder(USER_ADD_URL);
         try {

@@ -24,21 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * A fragment representing a list of groups.
+ * @author Josiah
  */
 public class GroupListFragment extends Fragment {
 
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
-    private String username;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,16 +42,12 @@ public class GroupListFragment extends Fragment {
     public GroupListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static GroupListFragment newInstance(int columnCount) {
-        GroupListFragment fragment = new GroupListFragment();
-        return fragment;
-    }
 
+    /**
+     * Builds the url which will be used to download users.
+     * @return the get users URL.
+     */
     public String buildURL(){
-
-        Log.e("Username", "http://cssgate.insttech.washington.edu/~josiah3/PHP_Code/PHP%20Code/list.php?cmd=groups&username=" + ((StockActivity) getActivity()).getUsername());
         return "http://cssgate.insttech.washington.edu/~josiah3/PHP_Code/PHP%20Code/list.php?cmd=groups&username=" + ((StockActivity) getActivity()).getUsername();
     }
 
@@ -121,10 +112,12 @@ public class GroupListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Group item);
     }
 
+    /**
+     * This task handles the downloading of Group items from our database.
+     */
     private class DownloadGroupsTask extends AsyncTask<String, Void, String> {
 
         @Override

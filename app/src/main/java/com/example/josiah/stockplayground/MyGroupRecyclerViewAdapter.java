@@ -11,11 +11,11 @@ import com.example.josiah.stockplayground.group.Group;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Group} and makes a call to the
- * TODO: Replace the implementation with code for your data type.
+ * @author Josiah
  */
 public class MyGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupRecyclerViewAdapter.ViewHolder> {
 
+    //The list of groups to display
     private final List<Group> mValues;
     private final GroupListFragment.OnListFragmentInteractionListener mListener;
 
