@@ -1,26 +1,29 @@
-package layout;
+package com.example.josiah.stockplayground;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.josiah.stockplayground.R;
-import com.example.josiah.stockplayground.StockActivity;
+import java.net.URLEncoder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OptionDisplayFragment.OnFragmentInteractionListener} interface
+ * {@link AddGroupFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link OptionDisplayFragment#newInstance} factory method to
+ * Use the {@link AddGroupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OptionDisplayFragment extends Fragment {
+public class AddGroupFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,13 +33,13 @@ public class OptionDisplayFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private GroupAddListener mListener;
 
-    public interface OptionDisplayFragmentInteractionListener {
-        public void doButtons();
+    public interface GroupAddListener {
+        public void addGroup(String url);
     }
 
-    public OptionDisplayFragment() {
+    public AddGroupFragment() {
         // Required empty public constructor
     }
 
@@ -46,11 +49,11 @@ public class OptionDisplayFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OptionDisplayFragment.
+     * @return A new instance of fragment AddGroupFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OptionDisplayFragment newInstance(String param1, String param2) {
-        OptionDisplayFragment fragment = new OptionDisplayFragment();
+    public static AddGroupFragment newInstance(String param1, String param2) {
+        AddGroupFragment fragment = new AddGroupFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,32 +74,21 @@ public class OptionDisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_option_display, container, false);
-
-        Button addGroup = (Button) view.findViewById(R.id.add_group_button);
-        addGroup.setOnClickListener(new View.OnClickListener() {
+        final View view = inflater.inflate(R.layout.fragment_add_group, container, false);
+        view.findViewById(R.id.add_new_group_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((StockActivity) getActivity()).goToAddGroup();
-            }
-        });
-
-        Button viewGroup = (Button) view.findViewById(R.id.view_groups_button);
-        viewGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((StockActivity) getActivity()).goToGroups();
+                mListener.addGroup(buildGroupURL(view));
             }
         });
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof GroupAddListener) {
+            mListener = (GroupAddListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -107,6 +99,28 @@ public class OptionDisplayFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+
+
+    private String buildGroupURL(View v){
+        StringBuilder sb = new StringBuilder(StockActivity.GROUP_ADD_URL);
+        try {
+            String groupName = ((EditText) v.findViewById(R.id.group_add_name)).getText().toString();
+            sb.append("groupName=");
+            sb.append(groupName);
+            String portfolio = ((EditText) v.findViewById(R.id.group_add_portfolio_value)).getText().toString();
+
+            sb.append("&portfolioValue=");
+            sb.append(URLEncoder.encode(portfolio, "UTF-8"));
+            String owner = ((StockActivity) getActivity()).getUsername();
+            sb.append("&owner=");
+            sb.append(URLEncoder.encode(owner, "UTF-8"));
+            Log.i("CourseAddFragment", sb.toString());
+        } catch (Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        return sb.toString();
     }
 
     /**
@@ -120,6 +134,7 @@ public class OptionDisplayFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }
