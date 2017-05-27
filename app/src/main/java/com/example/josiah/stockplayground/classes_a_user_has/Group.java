@@ -1,4 +1,4 @@
-package com.example.josiah.stockplayground.group;
+package com.example.josiah.stockplayground.classes_a_user_has;
 
 import org.json.JSONArray;
 import org.json.JSONException;

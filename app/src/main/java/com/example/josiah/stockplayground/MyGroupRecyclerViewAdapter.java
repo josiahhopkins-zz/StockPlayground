@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.josiah.stockplayground.group.Group;
+import com.example.josiah.stockplayground.classes_a_user_has.Group;
 
 import java.util.List;
 

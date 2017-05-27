@@ -1,20 +1,13 @@
 package com.example.josiah.stockplayground;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.josiah.stockplayground.group.Group;
+import com.example.josiah.stockplayground.classes_a_user_has.Group;
+import com.example.josiah.stockplayground.classes_a_user_has.Stock;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import layout.OptionDisplayFragment;
 
@@ -32,7 +24,7 @@ import layout.OptionDisplayFragment;
  * This is the holder for all of the non login related actions.
  * @author Josiah
  */
-public class StockActivity extends AppCompatActivity implements AddGroupFragment.GroupAddListener, GroupListFragment.OnListFragmentInteractionListener, OptionDisplayFragment.OnFragmentInteractionListener{
+public class StockActivity extends AppCompatActivity implements StockListFragment.StockListFragmentInteractionListener, AddGroupFragment.GroupAddListener, GroupListFragment.OnListFragmentInteractionListener, OptionDisplayFragment.OnFragmentInteractionListener{
 
     public static final String GROUP_ADD_URL = "http://cssgate.insttech.washington.edu/~josiah3/PHP_Code/PHP%20Code/addGroup.php?";
 
@@ -43,7 +35,7 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
         String user = (getIntent().getStringExtra("Username"));
         setContentView(R.layout.activity_stock);
 
-        goToOptions();
+        goToAvailableStocks();
     }
 
 
@@ -105,6 +97,19 @@ public class StockActivity extends AppCompatActivity implements AddGroupFragment
         task.execute(url.toString());
         // Takes you back to the previous fragment by popping the current fragment out.
         getSupportFragmentManager().popBackStackImmediate();
+    }
+
+    @Override
+    public void ChooseStockToLookAt(Stock item) {
+
+    }
+
+    public void goToAvailableStocks(){
+        StockListFragment stockListFragment = new StockListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.stock_fragment_container, stockListFragment)
+                .commit();
     }
 
     /**
